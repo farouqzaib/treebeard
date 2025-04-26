@@ -20,7 +20,7 @@ def main():
     print(len(docs))
     vector_index = VectorIndex(docs)
 
-    web_search = WebSearch(os.environ['CUSTOM_SEARCH_ENGINE_ID'], os.environ['CUSTOM_SEARCH_ENGINE_ID'])
+    web_search = WebSearch(os.environ['GOOGLE_API_KEY'], os.environ['CUSTOM_SEARCH_ENGINE_ID'])
     generator = MCTSDeepResearch(
         vector_index, 
         web_search,
