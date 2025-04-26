@@ -7,7 +7,7 @@ import os
 
 def main():
 
-    documents = pd.read_csv('archiving_1973.csv')
+    documents = pd.read_csv('examples/archiving_1973.csv')
 
     docs = []
 
