@@ -112,27 +112,10 @@ class MCTSDeepResearch:
         self.search_budget = 2
         self.max_depth = max_depth
         
-#     def identify_main_topics(self, query):
-#         """Identify main topics for research"""
-#         topic_prompt = f"""Generate a simple outline for a research report on: {query}. 
-#         Outline MUST have only one level. You MUST return a valid Python list without any preamble.
-#         Outline MUST NOT have more than 6 items.
-#         """
-#         topics_text = self.analyzer(topic_prompt)
-
-#         pattern = r'\[(?:\s*"[^"]*",?\s*)+\]'
-#         matches = re.findall(pattern, topics_text)
-        
-#         outline = ast.literal_eval(matches[-1])
-
-#         topics = [f"{query}: {topic}" for topic in outline]
-#         print(topics)
-#         return topics
 
     def identify_main_topics(self, query, num_topics=5, reportAgainstArchive=False):
         """Identify main topics for research using document clustering"""
         if not reportAgainstArchive:
-            # If no documents provided, use analyzer as before
             topic_prompt = f"""Generate a simple outline for a research report on: {query}. 
              Outline MUST have only one level. You MUST return a valid Python list without any preamble.
              Outline MUST NOT have more than {num_topics} items.
@@ -143,49 +126,34 @@ class MCTSDeepResearch:
 
             outline = ast.literal_eval(matches[-1])
 
-            # Parse topics (simplified)
             topics = [f"{query}: {topic}" for topic in outline]
             print(topics)
             return topics
 
-        # Extract document contents and create embeddings
-        # contents = [doc.content for doc in documents]
-
-        # if len(contents) < 2:
-        #     # Not enough documents for meaningful clustering
-        #     return [f"Topic 1: {query}"]
-
-        # Create embeddings for documents
-
         documents = self.vector_index.documents
         embeddings = np.vstack([doc.embedding for doc in documents])
 
-        # Determine optimal number of clusters (capped at requested num_topics)
         max_clusters = min(num_topics, len(documents) - 1)
         kmeans = KMeans(n_clusters=max_clusters, random_state=42, max_iter=5)
         clusters = kmeans.fit_predict(embeddings)
 
         keywords = [str(doc.keywords) for doc in documents]
         
-        # Group documents by cluster
         cluster_docs = {}
         for i, cluster_id in enumerate(clusters):
             if cluster_id not in cluster_docs:
                 cluster_docs[cluster_id] = []
             cluster_docs[cluster_id].extend([keyword.strip() for keyword in keywords[i].split(",")])
 
-        # Generate topic names based on common terms in each cluster
         topics = []
         for cluster_id, docs in cluster_docs.items():
 
             word_counts = Counter(docs)
             
-            # Remove stop words using sklearn's English stop words
             for word in ENGLISH_STOP_WORDS:
                 if word in word_counts:
                     del word_counts[word]
 
-            # Get top words
             top_words = [word for word, _ in word_counts.most_common(1)]
 
             if top_words:
@@ -341,7 +309,7 @@ class MCTSDeepResearch:
             section.content_generated.extend(filled_gaps)
             
             # Generate content with citations
-            content_prompt = f"""Expand on '{section.title}' addressing these topics:
+            content_prompt = f"""Write a detailed and factual report on '{section.title}' addressing these topics:
             {', '.join(filled_gaps)}
             
             Based on ONLY these sources:
@@ -363,7 +331,7 @@ class MCTSDeepResearch:
                     section.content_generated.append(gap.topic)
                 
                 doc_contents = "\n".join([doc.content for doc in new_docs])
-                integrate_prompt = f"""Enhance this section with new findings:
+                integrate_prompt = f"""Incoporate the new information into detailed report below:
                 
                 Current content:
                 {section.content}
@@ -531,8 +499,7 @@ class MCTSDeepResearch:
         
         for section in outline.sections:
             section_text = f"## {section.title}\n\n{section.content}\n\n"
-            # section_text = f"{section.content}\n\n"
-            # Add citations
+
             if section.documents:
                 section_text += "### Sources\n"
                 for doc in section.documents:

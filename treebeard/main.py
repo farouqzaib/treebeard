@@ -7,7 +7,7 @@ import os
 
 def main():
 
-    documents = pd.read_csv('archiving_1973.csv')
+    documents = pd.read_csv('examples/archiving_1973.csv')
 
     docs = []
 
@@ -20,26 +20,27 @@ def main():
     print(len(docs))
     vector_index = VectorIndex(docs)
 
-    web_search = WebSearch(os.environ['CUSTOM_SEARCH_ENGINE_ID'], os.environ['CUSTOM_SEARCH_ENGINE_ID'])
-    generator = MCTSDeepResearch(
+    web_search = WebSearch(os.environ['GOOGLE_API_KEY'], os.environ['CUSTOM_SEARCH_ENGINE_ID'])
+    assistant = MCTSDeepResearch(
         vector_index, 
         web_search,
         text_generator, 
         embedding_generator,
-        text_generator,#simple_analyzer
-        max_iterations=15
+        text_generator,
+        max_iterations=50
     )
 
-    outline, path, searches = generator.generate_research_report("Economic development of Nigeria contrasting 1973 with current trends")
+    outline, path, searches = assistant.generate_research_report("Economic development of Nigeria contrasting 1973 with current trends")
 
     # Generate final document
-    # document = generator.generate_final_document(outline)
+    report = assistant.generate_final_document(outline)
 
-    # print(f"Report: {outline.title}")
-    # print(f"Used {searches} web searches")
-    # print("=" * 50)
-    # print(f"Overall confidence: {outline.overall_confidence:.2f}")
-    # print(f"Citations: {outline.citation_count}")
+    print(f"Report: {outline.title}")
+    print(f"Used {searches} web searches")
+    print(report)
+    print("=" * 50)
+    print(f"Overall confidence: {outline.overall_confidence:.2f}")
+    print(f"Citations: {outline.citation_count}")
 
     # return document, outline, path
 
