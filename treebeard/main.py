@@ -7,7 +7,7 @@ import os
 
 def main():
 
-    documents = pd.read_csv('examples/archiving_1973.csv')
+    documents = pd.read_csv('/home/farouqzaib/Downloads/archiving_1970.csv')
 
     docs = []
 
@@ -30,7 +30,8 @@ def main():
         max_iterations=50
     )
 
-    outline, path, searches = assistant.generate_research_report("Economic development of Nigeria contrasting 1973 with current trends")
+    outline, path, searches = assistant.generate_research_report("Economic development of Nigeria contrasting 1970 with current trends",
+                                                                 outlineFromArchive=False)
 
     # Generate final document
     report = assistant.generate_final_document(outline)

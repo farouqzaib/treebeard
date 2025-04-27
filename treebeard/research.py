@@ -331,7 +331,7 @@ class MCTSDeepResearch:
                     section.content_generated.append(gap.topic)
                 
                 doc_contents = "\n".join([doc.content for doc in new_docs])
-                integrate_prompt = f"""Incoporate the new information into detailed report below:
+                integrate_prompt = f"""Incoporate the new information into the detailed report below:
                 
                 Current content:
                 {section.content}
@@ -433,10 +433,10 @@ class MCTSDeepResearch:
         # Weighted combination
         return (coverage * 0.3) + (confidence * 0.3) + (gap_score * 0.3) + (citation_score * 0.1)
     
-    def generate_research_report(self, query, reportAgainstArchive=False):
+    def generate_research_report(self, query, outlineFromArchive=False):
         """Main method to generate a research report using MCTS"""
         # Generate initial outline
-        initial_outline = self.generate_initial_outline(query, reportAgainstArchive)
+        initial_outline = self.generate_initial_outline(query, outlineFromArchive)
         
         initial_state = {
             "outline": initial_outline,
