@@ -53,5 +53,4 @@ report = assistant.generate_final_document(outline)
 
 `topics` is a comma-delimited list of topics from the paper
 
-The command above will generate a markdown file - [Generated Report](examples/Economic development of Nigeria contrasting 1970 with current trends_report.md)
-0 with current trends_report.md)
+The command above will generate a markdown file - [Generated Report](examples/Economic%20development%20of%20Nigeria%20contrasting%201970%20with%20current%20trends_report.md)
