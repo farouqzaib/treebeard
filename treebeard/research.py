@@ -113,9 +113,9 @@ class MCTSDeepResearch:
         self.max_depth = max_depth
         
 
-    def identify_main_topics(self, query, num_topics=5, reportAgainstArchive=False):
+    def identify_main_topics(self, query, num_topics=5, outlineFromArchive=False):
         """Identify main topics for research using document clustering"""
-        if not reportAgainstArchive:
+        if not outlineFromArchive:
             topic_prompt = f"""Generate a simple outline for a research report on: {query}. 
              Outline MUST have only one level. You MUST return a valid Python list without any preamble.
              Outline MUST NOT have more than {num_topics} items.
@@ -166,9 +166,9 @@ class MCTSDeepResearch:
         print(topics)
         return topics
     
-    def generate_initial_outline(self, query, reportAgainstArchive=False):
+    def generate_initial_outline(self, query, outlineFromArchive=False):
         """Generate initial report outline"""
-        topics = self.identify_main_topics(query, reportAgainstArchive=reportAgainstArchive)
+        topics = self.identify_main_topics(query, outlineFromArchive=outlineFromArchive)
         
         outline = ReportOutline(f"Research Report: {query}")
         for topic in topics:
