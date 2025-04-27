@@ -1,10 +1,14 @@
 ### Reasoning with Trees for Information Retrieval
 
-Treebeard - A Monte Carlo Tree Search approach to deep research/report generation. This ~~library~~ hack uses MCTS for exploration, identify knowledge gaps, and synthesize findings into comprehensive reports. It combines vector store retrieval with targeted internet searches to gather evidence and optimise information discovery. The ~~algorithm~~ hack balances exploration and exploitation to deliver structured, high-confidence research outputs with citations and source tracking blah blah blah. You get the gist.
+Treebeard - A Monte Carlo Tree Search approach to deep research/report generation. This ~~library~~ hack uses MCTS for exploration, identifying knowledge gaps, and synthesizing findings into comprehensive reports. It combines vector store retrieval with targeted internet searches to gather evidence and optimise information discovery. The ~~algorithm~~ hack balances exploration and exploitation to deliver structured, high-confidence research outputs with citations and source tracking blah blah blah. You get the gist.
 
 <img src="assets/MCTS-RAG.png">
 
-### Features
+### Requirements
+
+1. OpenAI key - set environment variable OPENAI_KEY
+2. Google API key - set environment variable GOOGLE_API_KEY
+3. Google custom search engine ID - set environment variable CUSTOM_SEARCH_ENGINE_ID
 
 ### Usage
 ```
