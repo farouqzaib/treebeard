@@ -4,6 +4,8 @@ Treebeard - A Monte Carlo Tree Search approach to deep research/report generatio
 
 <img src="assets/MCTS-RAG.png">
 
+The workflow starts by generating an outline for the provided query; using an LLM or running a simple clustering algorithm on the documents in the vector index to generate topics for the outline. Then MCTS optimises report generation using vector + web search, identifies knowledge gaps via reflection on past answers, and incorporates new knowledge into the draft.
+
 ### Requirements
 
 1. OpenAI key - set environment variable OPENAI_KEY
@@ -36,7 +38,7 @@ assistant = MCTSDeepResearch(
 
 # outlineFromArchive - set to True if outline for the report should be generated from the documents in the vector index
 
-outline, path, searches = assistant.generate_research_report("Economic development of Nigeria contrasting 1970 with current trends", outlineFromArchive=False)
+outline, path, searches = assistant.generate_research_report("Economic development of Nigeria contrasting 1970 with current trends", generateOutlineFromArchive=False)
 
 report = assistant.generate_final_document(outline)
 ```
@@ -45,7 +47,7 @@ report = assistant.generate_final_document(outline)
 
 `python -m treebeard.main --query "Economic development of Nigeria contrasting 1970 with current trends" --csv_path examples/archiving_1970.csv`
 
-`archiving_1970.csv` is a file from <a href="https://archivi.ng">Archivi.ng</a>, a social good project where I'm an occassional volunteer ~~indentured slave~~. The file looks like this:
+[archiving_1970.csv](examples/archiving_1970.csv) is a file from <a href="https://archivi.ng">Archivi.ng</a>, a social good project where I'm an occassional volunteer ~~indentured slave~~. The file looks like this:
 
 <img src="assets/data-sample.png">
 
@@ -53,4 +55,4 @@ report = assistant.generate_final_document(outline)
 
 `topics` is a comma-delimited list of topics from the paper
 
-The command above will generate a markdown file - [Generated Report](examples/Economic%20development%20of%20Nigeria%20contrasting%201970%20with%20current%20trends_report.md)
+The command above will generate a report for the provided query and save it to a markdown file - [Generated Report](examples/Economic%20development%20of%20Nigeria%20contrasting%201970%20with%20current%20trends_report.md)
