@@ -10,6 +10,8 @@ def main(query, csv_path, generate_outline_from_archive):
     documents = pd.read_csv(csv_path)
 
     docs = []
+
+    #this is the point where you do very fancy chunking but boring is often better
     for i in range(documents.shape[0]):
         row = documents.iloc[i]
         docs.append(Document(
