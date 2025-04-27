@@ -26,7 +26,6 @@ def main():
         web_search,
         text_generator, 
         embedding_generator,
-        text_generator,
         max_iterations=50
     )
 

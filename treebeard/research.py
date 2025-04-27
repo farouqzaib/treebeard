@@ -101,13 +101,12 @@ class ReportOutline:
         }
     
 class MCTSDeepResearch:
-    def __init__(self, vector_index, web_search, generator, 
-                 embedder, analyzer, max_iterations=100, max_depth=12):
+    def __init__(self, vector_index, web_search, text_generator, 
+                 embedder, max_iterations=100, max_depth=12):
         self.vector_index = vector_index
         self.web_search = web_search
-        self.generator = generator
+        self.text_generator = text_generator
         self.embedder = embedder
-        self.analyzer = analyzer
         self.max_iterations = max_iterations
         self.search_budget = 2
         self.max_depth = max_depth
@@ -120,7 +119,7 @@ class MCTSDeepResearch:
              Outline MUST have only one level. You MUST return a valid Python list without any preamble.
              Outline MUST NOT have more than {num_topics} items.
              """
-            topics_text = self.analyzer(topic_prompt)
+            topics_text = self.text_generator(topic_prompt)
             pattern = r'\[(?:\s*"[^"]*",?\s*)+\]'
             matches = re.findall(pattern, topics_text)
 
@@ -254,7 +253,7 @@ class MCTSDeepResearch:
             You MUST return a valid Python list without any preamble.
             """
             # print(research_questions_prompt)
-            research_questions_text = self.analyzer(research_questions_prompt)
+            research_questions_text = self.text_generator(research_questions_prompt)
             # print(research_questions_text)
             pattern = r'\[(?:\s*"[^"]*",?\s*)+\]'
             matches = re.findall(pattern, research_questions_text)
@@ -290,7 +289,7 @@ class MCTSDeepResearch:
                 gap = random.choice(unfilled_gaps)
                 # Generate search query
                 # search_prompt = f"Generate a simple web search query for: {gap.topic}. Do not inlcude any preamble."
-                search_query = f"{outline.title} - {gap.topic}"#self.analyzer(search_prompt)
+                search_query = f"{outline.title} - {gap.topic}"#self.text_generator(search_prompt)
 
                 # Perform search
                 docs = self.web_search.search(search_query)
@@ -318,7 +317,7 @@ class MCTSDeepResearch:
             Do not include headings or titles.
             """
             
-            section.content = self.generator(content_prompt)
+            section.content = self.text_generator(content_prompt)
             section.update_confidence()
             
         elif action_type == ActionType.INTEGRATE_FINDINGS:
@@ -343,7 +342,7 @@ class MCTSDeepResearch:
                 Do not include headings or titles.
                 """
                 
-                section.content = self.generator(integrate_prompt)
+                section.content = self.text_generator(integrate_prompt)
                 section.update_confidence()
             
         # Navigation actions
