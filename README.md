@@ -10,7 +10,7 @@ Treebeard - A Monte Carlo Tree Search approach to deep research/report generatio
 ```
 vector_index = VectorIndex(docs)
 
-docs above is a list with the following structure; I did say it's a hack, didn't I.
+# docs above is a list with the following structure; I did say it's a hack, didn't I.
 
 @dataclass
 class Document:
