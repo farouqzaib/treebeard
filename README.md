@@ -31,7 +31,6 @@ assistant = MCTSDeepResearch(
     web_search,
     text_generator, 
     embedding_generator,
-    text_generator,
     max_iterations=50
 )
 
@@ -41,3 +40,18 @@ outline, path, searches = assistant.generate_research_report("Economic developme
 
 report = assistant.generate_final_document(outline)
 ```
+
+### Demo
+
+`python -m treebeard.main --query "Economic development of Nigeria contrasting 1970 with current trends" --csv_path examples/archiving_1970.csv`
+
+`archiving_1970.csv` is a file from <a href="https://archivi.ng">Archivi.ng</a>, a social good project where I'm an occassional volunteer ~~indentured slave~~. The file looks like this:
+
+<img src="assets/data-sample.png">
+
+`text` is the text of the paper extracted via OCR
+
+`topics` is a comma-delimited list of topics from the paper
+
+The command above will generate a markdown file - [Generated Report](examples/Economic development of Nigeria contrasting 1970 with current trends_report.md)
+0 with current trends_report.md)
