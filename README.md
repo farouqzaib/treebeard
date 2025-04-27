@@ -45,6 +45,8 @@ report = assistant.generate_final_document(outline)
 
 ### Demo
 
+![Demo](assets/demo.gif)
+
 `python -m treebeard.main --query "Economic development of Nigeria contrasting 1970 with current trends" --csv_path examples/archiving_1970.csv`
 
 [archiving_1970.csv](examples/archiving_1970.csv) is a file from <a href="https://archivi.ng">Archivi.ng</a>, a social good project where I'm an occassional volunteer ~~indentured slave~~. The file looks like this:
@@ -56,3 +58,5 @@ report = assistant.generate_final_document(outline)
 `topics` is a comma-delimited list of topics from the paper
 
 The command above will generate a report for the provided query and save it to a markdown file - [Generated Report](examples/Economic%20development%20of%20Nigeria%20contrasting%201970%20with%20current%20trends_report.md)
+
+Report generation typically takes a few minutes; dependent on latency and availability of LLM provider, Google search and index size.
